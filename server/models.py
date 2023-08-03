@@ -3,7 +3,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from config import db, bcrypt
 
 
-class Attendee(db.Model):
+class Attendee(db.Model, SerializerMixin):
     __tablename__ = 'attendees'
 
     id = db.Column(db.Integer, primary_key=True)

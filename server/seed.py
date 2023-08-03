@@ -18,5 +18,3 @@ with app.app_context():
 
     print("Seeding done!")
 
-
-

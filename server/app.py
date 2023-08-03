@@ -6,7 +6,40 @@ from models import Attendee
 
 class Login(Resource):
 
+    def post(self):
+
+        data = request.get_json()
+
+        email = data.get('email')
+        password = data.get('password')
+
+        attendee = Attendee.query.filter_by(email=email).first()
+
+        if attendee:
+
+            if attendee.authenticate(password):
+
+                session['attendee_id'] = attendee.id
+
+                attendee_dict = attendee.to_dict()
+
+                response = make_response(attendee_dict, 200)
+
+                return response
+            
+        response = make_response({'error': 'Unauthorized'})
+
+        return response
+
+api.add_resource(Login, '/login')
+
+
+class Signup(Resource):
+
     pass
+
+api.add_resource(Signup, '/signup')
+
 
 
 
