@@ -4,19 +4,23 @@ import LoginForm from "./LoginForm";
 function App() {
 
 
-  const [user, setUser ] = useState(null)
+  const [ attendee, setAttendee ] = useState(null)
 
   useEffect (() => {
 
-    // need to check authorization 
+    // need to check authorization
+    fetch('/check_session')
+      .then((r)=>{
+        if (r.ok) {
+          r.json()
+          .then((attendee) => setAttendee(attendee))
+        }
+      }) 
 
-  })
+  }, [])
 
 
-
-
-
-
+  if (!attendee) return <LoginForm setAttendee={setAttendee}/>
 
   return (
   
