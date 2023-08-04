@@ -33,6 +33,26 @@ class Login(Resource):
 
 api.add_resource(Login, '/login')
 
+class CheckSession(Resource):
+    
+    def get(self):
+
+        if session.get('attendee_id'):
+
+            attendee = Attendee.query.filter_by(id=session['attendee_id']).first()
+
+            attendee_dict = attendee.to_dict()
+
+            response = make_response(attendee_dict, 200)
+
+            return response
+        
+        response = make_response( {'error': '401 Unauthorized'}, 401)
+
+        return response
+
+api.add_resource(CheckSession, '/check_session')
+
 
 class Signup(Resource):
 
