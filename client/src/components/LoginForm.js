@@ -45,7 +45,7 @@ function LoginForm ( {setAttendee} ) {
                 onChange={(e) => setPassword(e.target.value)}
             >
             </input>
-            <button>login</button>
+            <button>Login</button>
         </form>
     </div>
   )

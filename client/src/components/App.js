@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LoginForm from "./LoginForm";
+import Login from "../pages/Login";
 
 function App() {
 
@@ -20,12 +20,25 @@ function App() {
   }, [])
 
 
-  if (!attendee) return <LoginForm setAttendee={setAttendee}/>
+  const handleLogout = () => {
+    fetch('/logout', { method: 'DELETE'})
+      .then((r) => {
+        if (r.ok) {
+          setAttendee(null)
+        }
+      })
+  }
+
+
+  if (!attendee) return <Login setAttendee={setAttendee}/>
 
   return (
   
     <div>
-      You are now logged in
+      <p>
+        You are now logged in
+      </p>
+      <button onClick={handleLogout}> Logout </button>
     </div>
   );
 }

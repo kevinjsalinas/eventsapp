@@ -53,6 +53,18 @@ class CheckSession(Resource):
 
 api.add_resource(CheckSession, '/check_session')
 
+class Logout(Resource):
+
+    def delete(self):
+        
+        session['attendee_id'] = None
+        
+        response = make_response( {}, 204)
+
+        return response
+
+api.add_resource(Logout, '/logout')
+
 
 class Signup(Resource):
 
