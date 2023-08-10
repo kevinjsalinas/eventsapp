@@ -12,8 +12,7 @@ function App() {
     fetch('/check_session')
       .then((r)=>{
         if (r.ok) {
-          r.json()
-          .then((attendee) => setAttendee(attendee))
+          r.json().then((attendee) => setAttendee(attendee))
         }
       }) 
 
@@ -30,7 +29,8 @@ function App() {
   }
 
 
-  if (!attendee) return <Login setAttendee={setAttendee}/>
+
+  if (!attendee) return <Login onLogin={setAttendee}/>
 
   return (
   

@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 
 
-function LoginForm ( {setAttendee} ) {
+function LoginForm ( {onLogin} ) {
 
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
 
     //handleSubmitLogin
     const handleSubmit = (e) => {
-
+        
         e.preventDefault()
 
         fetch('/login', {
@@ -16,18 +16,18 @@ function LoginForm ( {setAttendee} ) {
             headers: {
             'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password }),
-        })
-            .then((r) => {
+            body: JSON.stringify({email, password }),
+        }).then((r) => {
                 if (r.ok) {
-                    r.json().then((attendee) => setAttendee(attendee))
+                    r.json().then((attendee) => onLogin(attendee))
+                } else {
+                    alert('must enter a valid email and password')
                 }
             })
         
     }
 
   return (
-    <div>
         <form onSubmit={handleSubmit}>
             <label>email</label>
             <input 
@@ -35,19 +35,16 @@ function LoginForm ( {setAttendee} ) {
                 id= "email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-            >
-            </input>
+            />
             <label>password</label>
             <input 
                 type="password"
                 id = "password"
                 value = {password}
                 onChange={(e) => setPassword(e.target.value)}
-            >
-            </input>
-            <button>Login</button>
+            />
+            <button type='submit'>Login</button>
         </form>
-    </div>
   )
 }
 

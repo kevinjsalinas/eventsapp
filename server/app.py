@@ -4,6 +4,19 @@ from config import app, db, api
 from models import Attendee
 
 
+# @app.before_request
+# def check_if_logged_in():
+#     open_access_list = [
+#         'signup',
+#         'login',
+#         'check_session'
+#     ]
+
+#     if (request.endpoint) not in open_access_list and (not session.get('attendee_id')):
+#         response = make_response({'error': 'Unauthorized'}, 401)
+#         return response
+
+
 class Login(Resource):
 
     def post(self):
@@ -27,11 +40,11 @@ class Login(Resource):
 
                 return response
             
-        response = make_response({'error': 'Unauthorized'})
+        response = make_response({'error': 'Unauthorized'}, 401)
 
         return response
 
-api.add_resource(Login, '/login')
+api.add_resource(Login, '/login', endpoint='login')
 
 class CheckSession(Resource):
     
@@ -51,7 +64,7 @@ class CheckSession(Resource):
 
         return response
 
-api.add_resource(CheckSession, '/check_session')
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
 class Logout(Resource):
 
@@ -63,14 +76,14 @@ class Logout(Resource):
 
         return response
 
-api.add_resource(Logout, '/logout')
+api.add_resource(Logout, '/logout', endpoint='logout')
 
 
 class Signup(Resource):
 
     pass
 
-api.add_resource(Signup, '/signup')
+api.add_resource(Signup, '/signup', endpoint='signup')
 
 
 

@@ -3,7 +3,7 @@ import LoginForm from '../components/LoginForm'
 import SignupForm from '../components/SignupForm'
 
 
-function Login( { setAttendee }) {
+function Login( { onLogin }) {
 
     const [showLogin, setShowLogin] = useState(true)
 
@@ -13,7 +13,7 @@ function Login( { setAttendee }) {
 
         { showLogin ? (
             <>
-                <LoginForm setAttendee={setAttendee}  />
+                <LoginForm onLogin={onLogin}  />
                 <p>don't have an account?</p>
                 <button onClick={() => setShowLogin(false)}>Sign Up</button>
             
