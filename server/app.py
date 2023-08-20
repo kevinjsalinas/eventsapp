@@ -3,6 +3,8 @@ from flask_restful import Resource
 from config import app, db, api
 from models import Attendee
 
+from sqlalchemy.exc import IntegrityError
+
 
 # @app.before_request
 # def check_if_logged_in():
@@ -81,7 +83,31 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 
 class Signup(Resource):
 
-    pass
+    def post(self):
+        data = request.get_json()
+
+        new_attendee = Attendee(email=data['email'])
+
+        new_attendee.password_hash = data.get('password')
+
+        try:
+
+            db.session.add(new_attendee)
+            db.session.commit()
+
+            session['attendee_id'] = new_attendee.id
+            
+            new_attendee_dict = new_attendee.to_dict()
+
+            response = make_response(new_attendee_dict, 201)
+
+        except IntegrityError:
+
+            db.session.rollback()
+
+            response = make_response( {'error': 'email already exists' }, 422)
+
+        return response
 
 api.add_resource(Signup, '/signup', endpoint='signup')
 
